@@ -1,5 +1,5 @@
 const express = require('express');
-const html = require('./routes/htmlroutes');
+const html = require('./routes/htmlRoutes');
 
 const PORT = 3001;
 
