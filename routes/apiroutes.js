@@ -4,37 +4,30 @@ const fs = require('fs');
 
 
 router.get('/notes', (req, res) => {
-  // fs.readFile('../db/db.json').then((data) => res.json(JSON.parse(data)));
-  // console.info(`${req.method} request received to get notes`);
-  // res.sendFile(path.join(__dirname, '../db/db.json'));  
-
-  // res.status(200).json('../db/db.jsons');
+  console.info(`${req.method} request received to get notes`);
+  res.sendFile(path.join(__dirname, '../db/db.json'));  
 });
 
 
-// router.post('/notes', (req, res) => {
-//   const { title, text } = req.body
-// // console.log(req.body);
-// // res.status(201).send('created user');
-//   if (title && text) {
-//     const newNote = {
-//       title,
-//       text,
-//     };
-//     fs.readFile('../db/db.json', newNote, 'UTF-8', (err, data) => {
-//       if (err) {
-//         console.error(err);
-//       } else {const parsedData = JSON.parse(data);
-//               parsedData.push(newNote);
-//         fs.writeFile('./db/db.json', JSON.stringify(parsedData, null, 4), (err) =>
-//         err ? console.error(err)
-//         : console.info('Note posted'))
-//         res.json(parsedData);
-//       }
-//     })
+router.post('/notes', (req, res) => {
 
-//   }
-// })
+  const newNote = req.body; 
+  fs.readFile('./db/db.json', 'utf8', (err, data) => {
+      if (err) {
+          console.error(err); 
+      } else {
+          const parsedData = JSON.parse(data);  
+          parsedData.push(newNote); 
+          fs.writeFile('./db/db.json', JSON.stringify(parsedData, null, 4), (err) =>
+          err
+            ? console.error(err)
+            : console.info('Success!'));
+          res.json(parsedData);    
+      }
+  })
+  
+})
+
 
 module.exports = router;
 
