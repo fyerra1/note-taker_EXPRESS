@@ -11,7 +11,7 @@ router.get('/notes', (req, res) => {
 
 
 router.post('/notes', (req, res) => {
-
+  req.body.id = uuidv4();
   const newNote = req.body; 
   fs.readFile('./db/db.json', 'utf8', (err, data) => {
       if (err) {
