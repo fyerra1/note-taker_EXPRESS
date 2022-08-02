@@ -27,5 +27,26 @@ router.post('/notes', (req, res) => {
   })
 })
 
+router.delete('/notes/:id', (req, res) => {
+  console.log(req.params.id);
+
+  fs.readFile('./db/db.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      const parsedData = JSON.parse(data);
+      const id = parsedData.findIndex(function(notes) {
+        return notes.id === req.params.id
+      });
+        parsedData.splice(id, 1);
+        fs.writeFile('./db/db.json', JSON.stringify(parsedData), (err) => 
+        err
+        ? console.error(err)
+        : res.json(parsedData)
+        )
+    }
+  })
+})
+
 
 module.exports = router;
